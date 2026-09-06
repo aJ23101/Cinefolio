@@ -1,0 +1,3 @@
+import { AppShell } from "@/components/AppShell";
+import { LogForm } from "@/components/LogForm";
+export default function NewLogPage() { return <AppShell><div className="mx-auto max-w-3xl"><p className="eyebrow">New film</p><h1 className="mt-2 text-4xl font-semibold">What did you watch?</h1><p className="mt-2 text-[var(--muted)]">Give the film a little context. Future you will be glad you did.</p><div className="surface-card mt-8 border border-[var(--line)] bg-[var(--panel)] p-5 sm:p-8"><LogForm /></div></div></AppShell>; }

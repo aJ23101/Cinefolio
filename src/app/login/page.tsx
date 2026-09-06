@@ -1,0 +1,12 @@
+"use client";
+import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Clapperboard } from "lucide-react";
+import { toast } from "sonner";
+import { createClient, hasSupabaseConfig } from "@/lib/supabase/client";
+
+export default function LoginPage() { const [email, setEmail] = useState(""); const [password, setPassword] = useState(""); const [busy, setBusy] = useState(false); const router = useRouter();
+  async function submit(event: React.FormEvent) { event.preventDefault(); if (!hasSupabaseConfig()) return toast.error("Cinefolio needs its Supabase keys in .env.local before anyone can sign in."); setBusy(true); const { error } = await createClient().auth.signInWithPassword({ email, password }); if (error) toast.error(error.message); else { toast.success("The lights are down. Welcome back."); router.push("/"); router.refresh(); } setBusy(false); }
+  return <AuthFrame eyebrow="Back to the picture" title="Pick up where you left off."><form onSubmit={submit} className="space-y-4"><label className="label">Email<input className="field mt-2" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" /></label><label className="label">Password<input className="field mt-2" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} /></label><button className="button button-accent mt-3 w-full" disabled={busy}>{busy ? "Opening your collection..." : "Sign in"}</button></form><p className="mt-6 text-center text-sm text-[var(--muted)]">New around here? <Link className="text-[var(--accent-soft)]" href="/signup">Start your film history</Link></p></AuthFrame>; }
+function AuthFrame({ eyebrow, title, children }: { eyebrow: string; title: string; children: React.ReactNode }) { return <main className="grid min-h-screen place-items-center px-5 py-12"><div className="w-full max-w-md"><div className="mb-8 flex items-center gap-2 text-[var(--accent-soft)]"><Clapperboard size={22} /><span className="font-bold">Cinefolio</span></div><p className="eyebrow">{eyebrow}</p><h1 className="mt-3 text-4xl font-semibold leading-tight">{title}</h1><div className="auth-card mt-8 border border-[var(--line)] bg-[var(--panel)] p-6 sm:p-8">{children}</div></div></main>; }
