@@ -15,7 +15,7 @@ export async function proxy(request: NextRequest) {
     setAll(cookiesToSet) { cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value)); response = NextResponse.next({ request }); cookiesToSet.forEach(({ name, value, options }) => response.cookies.set(name, value, options)); },
   } });
   const { data: { user } } = await supabase.auth.getUser();
-  const isPublic = request.nextUrl.pathname === "/login" || request.nextUrl.pathname === "/signup";
+  const isPublic = request.nextUrl.pathname === "/login" || request.nextUrl.pathname === "/signup" || request.nextUrl.pathname.startsWith("/auth/callback");
   if (!user && !isPublic) return NextResponse.redirect(new URL("/login", request.url));
   if (user && isPublic) return NextResponse.redirect(new URL("/", request.url));
   return response;
