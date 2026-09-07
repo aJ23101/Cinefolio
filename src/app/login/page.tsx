@@ -1,14 +1,8 @@
-"use client";
-import Link from "next/link";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Clapperboard } from "lucide-react";
-import { toast } from "sonner";
-import { createClient, hasSupabaseConfig } from "@/lib/supabase/client";
+import { LoginForm } from "@/app/login/LoginForm";
+import { PosterWall } from "@/app/login/PosterWall";
+import { getCuratedPosters } from "@/lib/tmdb-server";
 
-export default function LoginPage() { const [email, setEmail] = useState(""); const [password, setPassword] = useState(""); const [busy, setBusy] = useState(false); const [googleBusy, setGoogleBusy] = useState(false); const router = useRouter();
-  async function submit(event: React.FormEvent) { event.preventDefault(); if (!hasSupabaseConfig()) return toast.error("Cinefolio needs its Supabase keys in .env.local before anyone can sign in."); setBusy(true); const { error } = await createClient().auth.signInWithPassword({ email, password }); if (error) toast.error(error.message); else { toast.success("The lights are down. Welcome back."); router.push("/"); router.refresh(); } setBusy(false); }
-  async function signInWithGoogle() { if (!hasSupabaseConfig()) return toast.error("Cinefolio needs its Supabase keys in .env.local before anyone can sign in."); setGoogleBusy(true); const { error } = await createClient().auth.signInWithOAuth({ provider: "google", options: { redirectTo: `${window.location.origin}/auth/callback` } }); if (error) { toast.error(error.message); setGoogleBusy(false); } }
-  return <AuthFrame eyebrow="Back to the picture" title="Pick up where you left off."><button type="button" className="button button-dark w-full" onClick={signInWithGoogle} disabled={googleBusy}><GoogleIcon /> {googleBusy ? "Opening Google..." : "Continue with Google"}</button><div className="auth-divider"><span>or</span></div><form onSubmit={submit} className="space-y-4"><label className="label">Email<input className="field mt-2" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" /></label><label className="label">Password<input className="field mt-2" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} /></label><button className="button button-accent mt-3 w-full" disabled={busy}>{busy ? "Opening your collection..." : "Sign in"}</button></form><p className="mt-6 text-center text-sm text-[var(--muted)]">New around here? <Link className="text-[var(--accent-soft)]" href="/signup">Start your film history</Link></p></AuthFrame>; }
-function AuthFrame({ eyebrow, title, children }: { eyebrow: string; title: string; children: React.ReactNode }) { return <main className="grid min-h-screen place-items-center px-5 py-12"><div className="w-full max-w-md"><div className="mb-8 flex items-center gap-2 text-[var(--accent-soft)]"><Clapperboard size={22} /><span className="font-bold">Cinefolio</span></div><p className="eyebrow">{eyebrow}</p><h1 className="mt-3 text-4xl font-semibold leading-tight">{title}</h1><div className="auth-card mt-8 border border-[var(--line)] bg-[var(--panel)] p-6 sm:p-8">{children}</div></div></main>; }
-function GoogleIcon() { return <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="#EA4335" d="M12 10.2v3.9h5.5c-.24 1.4-1.7 4.1-5.5 4.1-3.3 0-6-2.7-6-6.2s2.7-6.2 6-6.2c1.9 0 3.2.8 3.9 1.5l2.7-2.6C16.9 3.1 14.7 2 12 2 6.9 2 2.7 6.2 2.7 12S6.9 22 12 22c6.9 0 9.3-4.9 9.3-7.4 0-.5 0-.9-.1-1.3H12Z"/></svg>; }
+export default async function LoginPage() {
+  const posters = await getCuratedPosters();
+  return <main className="login-shell"><PosterWall posters={posters} /><section className="login-panel"><LoginForm /></section></main>;
+}
