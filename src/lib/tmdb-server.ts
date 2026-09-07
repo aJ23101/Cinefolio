@@ -12,7 +12,6 @@ const curatedMovies: CuratedMovie[] = [
   { id: 50348, title: "The Lincoln Lawyer" },
   { id: 496243, title: "Parasite" },
   { id: 496, title: "Borat" },
-  { id: 372058, title: "Your Name" },
 ];
 
 const fallback = ({ id, title }: CuratedMovie): CuratedPoster => ({ id, title, poster_url: null });
