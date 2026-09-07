@@ -151,5 +151,3 @@ Built with 🎬 and a love for films.
 
 ```
 
-This version will look much cleaner on your GitHub repository page.
-```
