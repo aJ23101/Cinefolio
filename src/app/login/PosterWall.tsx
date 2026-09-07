@@ -14,5 +14,5 @@ const slots = [
 ];
 
 export function PosterWall({ posters }: { posters: CuratedPoster[] }) {
-  return <aside className="poster-wall" aria-hidden="true"><div className="poster-wall-brand"><Clapperboard size={24} /><span>Cinefolio</span></div>{posters.map((poster, index) => { const slot = slots[index]; return <div className="poster-wall-card" key={poster.id} style={{ top: slot.top, left: slot.left, width: slot.width, transform: `rotate(${slot.rotation})`, zIndex: slot.zIndex }}>{poster.poster_url ? <img src={poster.poster_url} alt="" /> : <span className="poster-wall-fallback"><Film size={30} /></span>}</div>; })}<div className="poster-wall-scrim" /></aside>;
+  return <aside className="poster-wall" aria-hidden="true"><div className="poster-wall-brand"><Clapperboard size={25} /><span>Cinefolio</span></div><div className="poster-wall-tagline">Good movies stay with you</div>{posters.map((poster, index) => { const slot = slots[index]; return <div className="poster-wall-card" key={poster.id} style={{ top: slot.top, left: slot.left, width: slot.width, transform: `rotate(${slot.rotation})`, zIndex: slot.zIndex }}>{poster.poster_url ? <img src={poster.poster_url} alt="" /> : <span className="poster-wall-fallback"><Film size={30} /></span>}</div>; })}<div className="poster-wall-scrim" /></aside>;
 }

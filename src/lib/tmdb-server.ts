@@ -9,12 +9,10 @@ const curatedMovies: CuratedMovie[] = [
   { id: 157336, title: "Interstellar" },
   { id: 155, title: "The Dark Knight" },
   { id: 27205, title: "Inception" },
-  { id: 238, title: "The Godfather" },
+  { id: 50348, title: "The Lincoln Lawyer" },
   { id: 496243, title: "Parasite" },
-  { id: 129, title: "Spirited Away" },
+  { id: 496, title: "Borat" },
   { id: 372058, title: "Your Name" },
-  { id: 550, title: "Fight Club" },
-  { id: 438631, title: "Dune" },
 ];
 
 const fallback = ({ id, title }: CuratedMovie): CuratedPoster => ({ id, title, poster_url: null });
