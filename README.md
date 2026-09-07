@@ -148,11 +148,6 @@ This project is currently maintained as a personal project.
 
 If you have ideas, feedback, or suggestions, feel free to open an issue or start a discussion.
 
-## ⚠️ Disclaimer
-
-Cinefolio uses the TMDB API to retrieve movie information and images.
-
-Cinefolio is not affiliated with or endorsed by TMDB.
 
 ## 📄 License
 
