@@ -2,12 +2,12 @@ import { Clapperboard, Film } from "lucide-react";
 import type { CuratedPoster } from "@/lib/tmdb-server";
 
 const slots = [
-  { top: "-7%", left: "-12%", width: "36%", rotation: "-7deg", zIndex: 1 },
-  { top: "-5%", left: "24%", width: "34%", rotation: "4deg", zIndex: 3 },
-  { top: "-3%", left: "56%", width: "36%", rotation: "-4deg", zIndex: 2 },
-  { top: "39%", left: "-4%", width: "35%", rotation: "5deg", zIndex: 4 },
-  { top: "38%", left: "31%", width: "35%", rotation: "-3deg", zIndex: 5 },
-  { top: "39%", left: "64%", width: "33%", rotation: "6deg", zIndex: 3 },
+  { top: "-7%", left: "-5%", width: "36%", rotation: "-7deg", zIndex: 1 },
+  { top: "-5%", left: "30%", width: "34%", rotation: "4deg", zIndex: 3 },
+  { top: "-3%", left: "61%", width: "36%", rotation: "-4deg", zIndex: 2 },
+  { top: "39%", left: "3%", width: "35%", rotation: "5deg", zIndex: 4 },
+  { top: "38%", left: "37%", width: "35%", rotation: "-3deg", zIndex: 5 },
+  { top: "39%", left: "69%", width: "33%", rotation: "6deg", zIndex: 3 },
   { top: "74%", left: "10%", width: "35%", rotation: "-5deg", zIndex: 2 },
   { top: "74%", left: "44%", width: "34%", rotation: "3deg", zIndex: 4 },
   { top: "74%", left: "75%", width: "31%", rotation: "-4deg", zIndex: 1 },
