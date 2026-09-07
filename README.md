@@ -1,6 +1,3 @@
-Absolutely. Here is the **complete `README.md`** in one block, ready to replace your current file:
-
-````md
 # Cinefolio
 
 > A private movie watch log built with Next.js, Supabase, and a little cinema mood.
@@ -11,25 +8,25 @@ Instead of relying on scattered notes or trying to remember what you've already 
 
 ## ✨ Features
 
-- 🎬 **Log Films** — Keep a personal record of every movie you've watched.
-- ⭐ **Rate Films** — Give every film your own rating.
-- ✍️ **Write Reviews** — Add your thoughts, reactions, and notes.
-- 🏷️ **Organize Your Collection** — Use genres, languages, and tags to organize your films.
-- 🔎 **Search & Filter** — Quickly find films in your personal collection.
-- 📊 **Film Statistics** — See insights and patterns across your viewing history.
-- 🎞️ **Movie Metadata** — Fetch movie information and artwork using TMDB.
-- 🔐 **Private by Design** — Your film history belongs to your account.
-- 📱 **Responsive UI** — Designed to work across desktop and mobile devices.
+- 🎬 Log Films — Keep a personal record of every movie you've watched.
+- ⭐ Rate Films — Give every film your own rating.
+- ✍️ Write Reviews — Add your thoughts, reactions, and notes.
+- 🏷️ Organize Your Collection — Use genres, languages, and tags to organize your films.
+- 🔎 Search & Filter — Quickly find films in your personal collection.
+- 📊 Film Statistics — See insights and patterns across your viewing history.
+- 🎞️ Movie Metadata — Fetch movie information and artwork using TMDB.
+- 🔐 Private by Design — Your film history belongs to your account.
+- 📱 Responsive UI — Designed to work across desktop and mobile devices.
 
 ## 🛠️ Tech Stack
 
 | Technology | Purpose |
 |---|---|
-| **Next.js** | React framework and application routing |
-| **TypeScript** | Type-safe development |
-| **Supabase** | Authentication and database |
-| **TMDB API** | Movie metadata and search |
-| **Tailwind CSS** | Styling and responsive UI |
+| Next.js | React framework and application routing |
+| TypeScript | Type-safe development |
+| Supabase | Authentication and database |
+| TMDB API | Movie metadata and search |
+| Tailwind CSS | Styling and responsive UI |
 
 ## 🚀 Getting Started
 
@@ -59,23 +56,19 @@ npm install
 
 Create a local environment file:
 
-```bash
+```text
 .env.local
 ```
 
-You can use the provided example file as a reference:
+Use `.env.local.example` as a reference for the required variables.
 
-```bash
-.env.local.example
-```
+Add your Supabase and TMDB credentials to `.env.local`.
 
-Add the required Supabase and TMDB credentials to `.env.local`.
-
-> **Important:** Never commit `.env.local` or expose your API keys publicly.
+> Never commit `.env.local` or expose your API keys publicly.
 
 ### 4. Set up Supabase
 
-Create a Supabase project and open the **SQL Editor**.
+Create a Supabase project and open the SQL Editor.
 
 Run the SQL file located at:
 
@@ -101,7 +94,7 @@ http://localhost:3000
 
 Cinefolio is built around a simple idea:
 
-**Your film history should belong to you.**
+Your film history should belong to you.
 
 User film logs are protected using Supabase Row Level Security (RLS), helping ensure that users can only access their own private data.
 
@@ -117,9 +110,9 @@ API keys and local environment variables are kept outside the public repository.
 6. Add genres or tags.
 7. Explore your film history and statistics over time.
 
-The goal isn't just to remember **what** you watched.
+The goal isn't just to remember what you watched.
 
-It's to build a record of **your relationship with films**.
+It's to build a record of your relationship with films.
 
 ## 📊 Your Film History
 
@@ -148,7 +141,6 @@ This project is currently maintained as a personal project.
 
 If you have ideas, feedback, or suggestions, feel free to open an issue or start a discussion.
 
-
 ## 📄 License
 
 This project is currently intended for personal and educational use.
@@ -158,4 +150,6 @@ This project is currently intended for personal and educational use.
 Built with 🎬 and a love for films.
 
 ```
+
+This version will look much cleaner on your GitHub repository page.
 ```
