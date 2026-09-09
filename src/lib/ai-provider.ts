@@ -1,0 +1,8 @@
+export type CinefolioAiContext = { question: string; watchedCount: number; favoriteGenres: string[]; languages: string[]; watchlist: string[]; candidateTitles: string[] };
+
+/** Server-only provider seam. Swap this adapter without changing the chat route. */
+export async function askMovieAssistant(context: CinefolioAiContext): Promise<string | null> {
+  const key = process.env.OPENROUTER_API_KEY; if (!key) return null;
+  const prompt = `You are Cinefolio, a concise, warm movie companion. Answer this user question: ${context.question}\nPersonal context: watched ${context.watchedCount} films; favourite genres: ${context.favoriteGenres.join(", ") || "still forming"}; languages: ${context.languages.join(", ") || "unknown"}; watchlist: ${context.watchlist.join(", ") || "empty"}; eligible picks: ${context.candidateTitles.join(", ") || "none"}. Never claim availability or runtime unless supplied. Give a two-sentence answer and only recommend eligible picks.`;
+  try { const response = await fetch("https://openrouter.ai/api/v1/chat/completions", { method: "POST", headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json", "X-OpenRouter-Title": "Cinefolio" }, body: JSON.stringify({ model: process.env.CINEFOLIO_AI_MODEL ?? "nvidia/nemotron-3-super-120b-a12b:free", messages: [{ role: "user", content: prompt }], max_tokens: 280, temperature: 0.7 }), signal: AbortSignal.timeout(15000) }); if (!response.ok) return null; const body = await response.json() as { choices?: Array<{ message?: { content?: string } }> }; return body.choices?.[0]?.message?.content?.trim() || null; } catch { return null; }
+}

@@ -8,6 +8,8 @@ import { createClient } from "@/lib/supabase/server";
 import { formatDate, formatRuntime } from "@/lib/utils";
 import { DeleteLogButton } from "@/components/DeleteLogButton";
 import type { MovieLog } from "@/lib/types";
+import { getWatchProviders } from "@/lib/watch-providers";
+import { FavoriteButton } from "@/components/FavoriteButton";
 
 export default async function MovieDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -18,6 +20,8 @@ export default async function MovieDetailPage({ params }: { params: Promise<{ id
   const log = data as MovieLog;
   const watchedDate = log.watched_date ?? log.watched_on;
   const review = log.review_text ?? log.review;
+  const providers = await getWatchProviders(log.movie.tmdb_id, log.movie.country ?? "US");
+  const { data: favorite } = await supabase.from("movie_collections").select("movie_id").eq("movie_id", log.movie_id).eq("kind", "favorite").maybeSingle();
 
   return <AppShell>
     <Link href="/movies" className="mb-8 inline-flex items-center gap-2 text-sm text-[var(--muted)] hover:text-[var(--paper)]"><ArrowLeft size={16} /> Back to your films</Link>
@@ -27,9 +31,10 @@ export default async function MovieDetailPage({ params }: { params: Promise<{ id
         <p className="eyebrow">A note from {formatDate(watchedDate)}</p>
         <h1 className="mt-2 text-4xl font-semibold sm:text-6xl">{log.movie.title}</h1>
         <p className="mt-3 text-[var(--muted)]">{[log.movie.release_year, log.movie.director && `Directed by ${log.movie.director}`, formatRuntime(log.movie.runtime)].filter(Boolean).join(" · ")}</p>
-        <div className="mt-6 flex items-center gap-4"><RatingInput value={log.rating} readOnly />{log.rewatch && <span className="tag"><RotateCcw size={13} className="mr-1" /> Rewatch</span>}</div>
+        <div className="mt-6 flex flex-wrap items-center gap-4"><RatingInput value={log.rating} readOnly />{log.rewatch && <span className="tag"><RotateCcw size={13} className="mr-1" /> Rewatch</span>}<FavoriteButton movieId={log.movie_id} initial={Boolean(favorite)} /></div>
         <div className="mt-8 grid gap-3 border-y border-[var(--line)] py-5 text-sm sm:grid-cols-2"><Meta label="Country" value={log.movie.country} /><Meta label="Primary language" value={log.movie.language} /><Meta label="Audio languages" value={log.movie.audio_languages?.join(", ")} /><Meta label="Genres" value={log.movie.genre?.join(", ")} /></div>
         {log.movie.overview && <p className="mt-8 max-w-2xl leading-relaxed text-[var(--muted)]">{log.movie.overview}</p>}
+        <section className="watch-providers"><p className="eyebrow">Where to watch</p>{providers.length ? <div className="provider-list">{providers.map((provider) => <div key={provider.name}><strong>{provider.name}</strong><span>{provider.type}</span></div>)}</div> : <p>Availability isn&apos;t connected yet. Cinefolio won&apos;t guess where this is streaming.</p>}</section>
         {review && <blockquote className="mt-10 border-l-2 border-[var(--accent)] pl-5 text-xl leading-relaxed text-[#ded4c8]">&ldquo;{review}&rdquo;</blockquote>}
         <div className="mt-8 flex flex-wrap gap-2">{log.tags.map((tag) => <Link className="tag transition hover:border-[var(--accent)] hover:text-[var(--paper)]" href={`/movies?tag=${encodeURIComponent(tag)}`} key={tag}>{tag}</Link>)}</div>
         <details className="mt-12 border-t border-[var(--line)] pt-6"><summary className="flex cursor-pointer list-none items-center gap-2 text-sm font-semibold"><Pencil size={15} className="text-[var(--accent)]" /> Edit this film note</summary><div className="mt-6 max-w-2xl"><LogForm logId={log.id} movieId={log.movie_id} existing={{ tmdb_id: String(log.movie.tmdb_id ?? ""), title: log.movie.title, release_year: String(log.movie.release_year ?? ""), director: log.movie.director ?? "", runtime: String(log.movie.runtime ?? ""), country: log.movie.country ?? "", language: log.movie.language ?? "", audio_languages: log.movie.audio_languages ?? [], genre: log.movie.genre ?? [], poster_url: log.movie.poster_url ?? "", backdrop_url: log.movie.backdrop_url ?? "", overview: log.movie.overview ?? "", original_language: log.movie.original_language ?? "", watched_on: watchedDate, rating: log.rating, review_text: review ?? "", tags: log.tags, rewatch: log.rewatch }} /></div></details>
