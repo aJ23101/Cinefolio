@@ -1,4 +1,6 @@
-# Cinefolio
+![Cinefolio Homepage](cinefolio.png)
+
+# 🎬 Cinefolio
 
 > A private movie watch log built with Next.js, Supabase, and a little cinema mood.
 
